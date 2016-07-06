@@ -1,0 +1,139 @@
+<html>
+    <head>
+        <script src='../jquery-3.0.0.min.js' type="text/javascript"></script>
+        <script src='./classMngTable.js' type="text/javascript"></script>
+            
+        <script>
+
+            $(document).ready(function(){
+                editMode=-1;
+                myTable=new mngTable("data",true);
+                //example find and filter text
+                $("#f").keyup(function(){
+                    if($("#filter").is(':checked')){
+                        myTable.findDataCELL($(this).val());
+                    }else{
+                        myTable.findDataCELL($(this).val(),"high");
+                    }
+                });
+                //example show property
+                $("#pr").click(function(){
+                    var idTable=myTable.table();
+                    var cl=myTable.ncols();
+                    var rw=myTable.nrows();
+                    var fl=myTable.field();
+                    $("#output").html("Propertys of Table: "+idTable.attr("id")+"</br>Cols: "+cl+"<br/>Headers Cols:<li>"+fl[0]+"</li><li>"+fl[1]+"</li><li>"+fl[2]+"</li><li>"+fl[3]+"</li><br/>Rows: "+rw+"<br/>");
+                    a=new Array("a","b","c","d");
+                });
+                //example extract data JSON
+                $("#json").click(function(){
+                    myJSON=myTable.extractDataJSON();
+                    console.log(myJSON);
+                    $("#output").html(myJSON["data"][1]["name"]+" for more see console log");
+                });
+                
+                $("#add").click(function(){
+                    d=new Array();
+                    d.push($("#n").val());
+                    d.push($("#name").val());
+                    d.push($("#email").val());
+                    d.push($("#account").val());
+                    
+                    if(editMode>-1){
+                        myTable.putDataROW(editMode,d); //example add data in row
+                        editMode=-1;
+                    }else{
+                        myTable.addROW("last",d); //example add row
+                    }
+                    
+                });
+                
+                $("#data").click(function(ev){
+                    xy=myTable.getIndexCELL(ev);
+                    //example change cell value
+                    console.log(xy);
+                    if(xy[1]==1){
+                        a=prompt("Put new value (actual value: "+myTable.extractDataCELL(xy[0],xy[1])+")");
+                        myTable.putDataCELL(xy[0],xy[1],a);
+                    }
+                    //example extract data row
+                    if(xy[1]==0){
+                        editMode=xy[0];
+                        r=myTable.extractDataROW(xy[0]);
+                        $("#n").val(r[0]);
+                        $("#name").val(r[1]);
+                        $("#email").val(r[2]);
+                        $("#account").val(r[3]);
+                    }
+                    //example extract data col
+                    if(xy[0]==0){
+                        c=myTable.extractDataCOL(xy[1]);
+                        list="";
+                        for(i=0;i<c.length;i++)
+                            list+="<li>"+c[i]+"</li>";
+                        $("#output").html(list);
+                    }
+                });
+            });
+        </script>
+        <style>
+            .remove{color:red}
+            td{border:1px solid green;width:80px}
+            .hd{color:red;background-color:#FAED7F;text-align:center}
+            .high{color:green;background-color:yellow}
+            .barMenu{background-color:#BFBFBF;height:45px;display:block}
+            .panels{width:30%;float:left;border:2px solid green;padding:10px 10px 10px 10px;margin:20px 0 5px 10px}
+            label{display:block;width:100%}
+        </style>
+    </head>
+    <body>
+        <div class="barMenu"><button id='pr'>Show Table Property</button><button id='json'>Extract Data JSON</button></div>
+        
+        <div id='tb' class='panels'>
+            <input id="f" name="f" type="text"/><input type="checkbox" id="filter" name="filter">Filter Table
+            <h1>Table 1</h1>
+            <table id='data' style="border:1px solid navy;color:red">
+                <tr>
+                    <td class='hd'>id</td>
+                    <td class='hd'>name</td>
+                    <td class='hd'>email</td>
+                    <td class='hd'>account</td>
+                </tr>
+                <tr><td class='i'>1</td><td>Mike</td><td>mk@next.net</td><td>VIP</td></tr>
+                <tr><td class='i'>2</td><td>Wendy</td><td>wd@next.net</td><td>USER</td></tr>
+                <tr><td class='i'>3</td><td>Dolan</td><td>dl@next.net</td><td>PROGRAMMER</td></tr>
+                <tr><td class='i'>4</td><td>Mary</td><td>mr@next.net</td><td>ADMIN</td></tr>
+                <tr><td class='i'>5</td><td>Jhon</td><td>jh@next.net</td><td>NONE</td></tr>
+                <tr><td class='i'>6</td><td>Kay</td><td>ky@next.net</td><td>PROGRAMMER</td></tr>
+                <tr><td class='i'>7</td><td>Will</td><td>wl@next.net</td><td>USER</td></tr>
+                <tr><td class='i'>8</td><td>Rexi</td><td>rx@next.net</td><td>CHIEF</td></tr>
+            </table>
+        </div>
+        <div id='tb' class='panels'>
+            <h1>Form Data</h1>
+            <label>id</label>
+            <input type="text" id='n' name='n'/>
+            <label>name</label>
+            <input type="text" id='name' name='name'/>
+            <label>email</label>
+            <input type="text" id='email' name='email'/>
+            <label>account</label>
+            <input type="text" id='account' name='account'/>
+            <button id='add'>Accept</button>
+        </div>
+        <div id='output' class='panels'>
+            <h1>How to use this example</h1>
+            <p>1) To display the properties of the table click the button "Show Table Property"</p>
+            <p>2) To extract data from the table and pass them to JSON click teh button "Extract Data JSON" and see console log</p>
+            <p>3) To filter table click the checkbox and type something in the input</p>
+            <p>4) To stand out the words in the table according to typed in the input, unmark the checkbox and type something</p>
+            <p>5) To extract all the data in a column, click its header</p>
+            <p>6) To extract all the data in a row a edit, click in the first cell in the row</p>
+            <p>7) To change a value of a Cell, click it (only in the colum names)</p>
+            <p>8) To add a empty row at the end of the table, click the button accept</p>
+            <p>9) To add a new row with data at the end of the table, fill the input's and click the button accept</p>
+            <p>10) for More see documentation... regards!!!!!</p>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <style>
+            body{padding:10px 100px 10px 100px; background-color:#BFBFBF}
+            h1{color: red}
+            h2{color:navy}
+            .met{color:green}
+        </style>
+    </head>
+    <body>
+        <h1>Class mngTable</h1>
+        <h2>By Miguel Hernandez Liebano (mhliebano@gmail.com)</h2>
+        <p>This simple class allows you to manage and administer the common work with an html table (without the standard thead and tbody) containing rows (tr) and columns without the html standard.</p>
+        <p>To operate all kind depends on JQUERY in its latest version, it has not been tested in smaller versions to 3.0.0, just as it has only been tested in google chrome for linux</p>
+        <h2>Instance Class</h2>
+        <p>The class when it is instantiated receives two parameters in its constructor, the first of which is mandatory and corresponds to the id of the table to drive, the second parameter is a Boolean that indicates whether the first row of the table is used as column header.</p>
+        <p>If the id of the object passed in parameter to the constructor is not from a TABLE type an error is thrown by the class</p>
+        <h2>Methods of Table</h2>
+        <p class="met">.table()</p>
+        <p>Return a object jquery type table</p>
+        <p class="met">.field()</p>
+        <p>Returns an array with the names of the headers in the first row, only if defined the second constructor parameter to True </p>
+        <p class="met">.nrows()</p>
+        <p>Return a integer with the number of rows in the table</p>
+        <p class="met">.ncols()</p>
+        <p>Return a integer with the number of columns in the table</p>
+        <h2>Methods of Data extraction</h2>
+        <p class="met">.extractDataJSON()</p>
+        <p>Return a JSON object from the data in the table: (tableId->[field1:data,field2:data,...,fieldN:data]</p>
+        <p class="met">.extractDataCELL(r as Integer,c as Integer)</p>
+        <p>Param: r index Row, c Index Column</p>
+        <p>Returns a string of the cell whose index are specified in the parameter</p>
+        <p class="met">.extractDataROW(r as Integer)</p>
+        <p>Param: r index Row</p>
+        <p>Returns a array with the data of each the cell into row whose index are specified in the parameter</p>
+        <p class="met">.extractDataCOL(c as Integer)</p>
+        <p>Param: c index Column</p>
+        <p>Returns a array with the data of each the cell into column whose index are specified in the parameter</p>
+        <h2>Methods of Data Insertion</h2>
+        <p class="met">.putDataCELL(r as Integer,c as Integer,t as string)</p>
+        <p>Param: r index Row, c index Column, t as String</p>
+        <p>Put a text(t) into cell whose indexes are r and c specified in the parameter</p>
+        <p class="met">.putDataROW(r as Integer,data as Array)</p>
+        <p>Param: r index Row,data array with data to put in the cells</p>
+        <p>Place each value of the array of data in each of the cells in the row whose index is the value specified in the first parameter</p>
+        <h2>Methods of CELL</h2>
+        <p class="met">.getIndexCELL(e as Event)</p>
+        <p>Param: e event for example click</p>
+        <p>Return a array with two values [0]=index of row [1]=index of Column</p>
+        <p class="met">.findDataCELL(t as String,h as ClassName)</p>
+        <p>Param: t string to find, h name of class to remark the text found [optional if no is specified the files are hidden]</p>
+        <p>Looking for an exact match between the cells of the table, if a class name specified in the second parameters matching text is marked with the characteristic of that class. otherwise the rows are hidden and only leave visible rows with matching text</p>
+
+        <h2>Methods of ROWS</h2>
+        <p class="met">.getIndexROW(e as Event)</p>
+        <p>Param: e event for example click</p>
+        <p>Returns an integer index of the row that triggered the event</p>
+        <p class="met">.hideROW(r as Integer)</p>
+        <p>Param: r index Row</p>
+        <p>Hidden a row with specified index</p>
+        <p class="met">.showROW(r as Integer)</p>
+        <p>Param: r index Row</p>
+        <p>Show a row with specified index</p>
+        <p class="met">.addROW(r as Integer, d as Array)</p>
+        <p>Param: r index Row where you inserted the next row, d array with data to put in the cells[optional] </p>
+        <p>Insert a new row in the table</p>
+        <p class="met">.deleteROW(r as Integer)</p>
+        <p>Param: r index Row</p>
+        <p>Delete a row with specified index</p>
+        <h2>Methods of COLUMNS</h2>
+        <p class="met">.getIndexCOL(e as Event)</p>
+        <p>Param: e event for example click</p>
+        <p>Returns an integer index of the col that triggered the event</p>
+        <p class="met">.hideCOL(r as Integer)</p>
+        <p>Param: r index col</p>
+        <p>Hidden a col with specified index</p>
+        <p class="met">.showCOL(r as Integer)</p>
+        <p>Param: r index Col</p>
+        <p>Show a col with specified index</p>
+        <p class="met">.addCOL(r as Integer)</p>
+        <p>Param: r index Columns where you inserted the next row</p>
+        <p>Insert a new columm in the table</p>
+        <p class="met">.deleteCOL(r as Integer)</p>
+        <p>Param: c index column</p>
+        <p>Delete a column with specified index</p>
+    </body>
+</html>
